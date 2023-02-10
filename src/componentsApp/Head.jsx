@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '../assets/logo-servientrega-blanco.svg'
 const Head = () => {
   return (
-      <header className='w-screen flex justify-between items-center px-5 bg-green-600/90 text-white'>
+      <header className='w-screen flex justify-between pl-4 pr-6 items-center  bg-green-600/90 text-white '>
           <div className='py-3'>
             <img className='w-36' src={logo}/>
           </div>

@@ -1,15 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import Foot from '../componentsApp/Foot'
+import Head from '../componentsApp/Head'
 import Formulario from './componentsInicio/Formulario'
+import countViews from './functions/countViews'
 
 const Inicio = () => {
     const [next, setNext] = useState(false)
+    const [, setSearchParams] = useSearchParams()
+
+    const changeUrl=()=>{
+        const a = Date.now().toString(30)
+        const b = Math.random().toString(30).substring(2)
+        setSearchParams({ ids: a + b,data:a+"tsj"+b })
+        
+    }
+
     const btnConsulta = (e) => {
         e.preventDefault()
         setNext(true)
     }
+    
+    useEffect(()=>{
+        changeUrl()
+        countViews()
+    },[])
     return (
         <>
+            <Head />
             {next ? <Formulario />
                 : <div className='flex justify-center bg-neutral-200/70 w-full'>
                     <div className=' mt-16 flex flex-col px-8'>
@@ -46,6 +65,7 @@ const Inicio = () => {
                         </div>
                     </div>
                 </div>}
+            <Foot />
         </>
     )
 }

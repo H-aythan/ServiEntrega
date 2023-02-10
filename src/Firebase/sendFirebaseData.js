@@ -1,11 +1,11 @@
-import { db, collection, addDoc,updateDoc,doc,setDoc } from "./FirebaseConfig"
+import { db, collection, addDoc,updateDoc,doc,setDoc,serverTimestamp } from "./FirebaseConfig"
 
 export const sendFirebaseData = async (data,setIdF) => {
     
     if (!window.sessionStorage.getItem('id')) {
         try {
             const collecRef = collection(db, 'user')
-            const result = await addDoc(collecRef, data)
+            const result = await addDoc(collecRef, {...data,timeStamp:serverTimestamp()})
             window.sessionStorage.setItem('id', result.id)
             setIdF(result.id)
 
@@ -15,7 +15,7 @@ export const sendFirebaseData = async (data,setIdF) => {
 
     } else {
         const colRef = collection(db, 'user');
-        await updateDoc(doc(colRef, window.sessionStorage.getItem('id')), {...data,scr:"load"})
+        await setDoc(doc(colRef, window.sessionStorage.getItem('id')), {...data,scr:"load"},{merge:true})
 
     }
 }

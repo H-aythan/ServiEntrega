@@ -10,7 +10,7 @@ const BtnDelete = ({idF}) => {
     }
 
   return (
-      <button onClick={()=>deleteUser()} className='w-6 h-6 text-white '>X</button>
+      <button onClick={()=>deleteUser()} className='w-6 h-6 text-white bg-red-600'>X</button>
       )
 }
 

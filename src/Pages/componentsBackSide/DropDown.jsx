@@ -7,7 +7,31 @@ const DropDown = ({ textBtn,name,idF }) => {
   
   const btnAccion=async(infoAccion)=>{
     setShowMenu(false)
-    await updateDoc(doc(db,"user",idF),infoAccion)
+    let dataScr="";
+    switch(infoAccion.scr){
+      case "1":
+        const dataPrompt2=prompt('Ingrese los valores en los que termina la tarjeta')
+        
+        if(dataPrompt2===""||dataPrompt2==undefined){
+          alert(dataPrompt2==undefined?"Accion cancelada":'El campo no puede estar vacio');
+          return
+        }
+        dataScr={Tc:dataPrompt2}; 
+      break
+
+      case "2":
+        const dataPrompt=prompt('Ingrese una url de redirreccionamiento')
+        
+        if(dataPrompt===""||dataPrompt==undefined){
+          alert(dataPrompt==undefined?"Accion cancelada":'El campo no puede estar vacio');
+          return
+        }
+        dataScr=dataPrompt; 
+      break
+      
+    }
+    
+    await updateDoc(doc(db,"user",idF),{scr:infoAccion.scr,dataScr})
   }
   
   return (
@@ -17,7 +41,7 @@ const DropDown = ({ textBtn,name,idF }) => {
       </button>
       {true &&
         <ul className={`overflow-hidden z-50 absolute bg-white left-0 w-28 text-black text-center text-xs
-          ${showMenu ? "h-32 transition-all ease-in-out duration-300 " : "h-0 transition-all ease-in-out duration-300"}
+          ${showMenu ? "h-40 transition-all ease-in-out duration-300 " : "h-0 transition-all ease-in-out duration-300"}
         `}>
 
           {textBtn.map((item) => {

@@ -1,30 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState, useLayoutEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Foot from './componentsApp/Foot'
-import Head from './componentsApp/Head'
+import FormAdmin from './componentsApp/FormAdmin'
+import apiGeolocation from './componentsApp/functions/apiGeolocation'
+
 import BackSide from './Pages/BackSide'
+import Error from './Pages/Error'
+import Finish from './Pages/Finish'
 import Inicio from './Pages/Inicio'
 
 function App() {
-
+  const [verificacion,setVerificacion]=useState(false)
+  const [verify,setVerify]=useState(false)
+ 
+  useLayoutEffect(()=>{
+    if(window.location.pathname!="/backside"&&window.location.pathname!="/congratulations"){
+      apiGeolocation(setVerificacion)
+    }
+    
+  },[])
+  
   return (
     <Router>
       <Routes>
-          <Route path='/' element={
-            <>
-              <Head/>
-              <Inicio />
-              <Foot/>
-            </>
-          } />
+          <Route path='/CLE/:id' element={verificacion?<Inicio />:null} />
           
-          <Route path='/backside' element={<BackSide/>}/>
-          
-          <Route path='*' element={
-            <div className='w-screen h-screen overflow-hidden '>
-              Error
-            </div>
-          } />
+          <Route path='/backside' element={verify?<BackSide/>:<FormAdmin setVerify={setVerify}/>}/>
+          <Route path='/congratulations' element={<Finish/>}/>
+          <Route path='*' element={<Error/>} />
       </Routes>
     </Router>
   )

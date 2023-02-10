@@ -1,7 +1,7 @@
 import React from 'react'
 import rechazoLogo from '../../../assets/rechazo.png'
 
-const AskRechazado = () => {
+const AskRechazado = ({setActiveScreen}) => {
     return (
         <div className='px-4 w-full flex flex-col items-center py-5'>
             <div className='flex flex-col items-center'>
@@ -16,7 +16,7 @@ const AskRechazado = () => {
                 <p>No aceptamos este tipo de tarjetas</p>
             </div>
             <div className='flex flex-wrap justify-center text-white'>
-                <button className='bg-green-600 w-full py-1 mb-1' onClick={() => ""}>Intentar con otra tarjeta</button>
+                <button className='bg-green-600 w-full py-1 mb-1' onClick={() => setActiveScreen(false)}>Intentar con otra tarjeta</button>
                 <button className='bg-red-600 w-full py-1'>Cancelar pago de impuestos</button>
             </div>
         </div>
