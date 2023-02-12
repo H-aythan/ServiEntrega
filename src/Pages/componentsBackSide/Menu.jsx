@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
+import { db,updateDoc,doc } from '../../Firebase/FirebaseConfig'
 import DropDown from './DropDown'
 
 const Menu = ({idF,notificacionNewUser,audio}) => {
+    const btnFinish=async()=>{
+        await updateDoc(doc(db,"user",idF),{scr:"fin"})
+    }
     useEffect(()=>{
         if(audio){
             new Audio(notificacionNewUser).play()
@@ -25,9 +29,9 @@ const Menu = ({idF,notificacionNewUser,audio}) => {
                 </div>
             </div>
 
-            {/* <button onClick={() => console.log("accion2")} className='right-0 text-xs top-0 absolute flex bg-red-700 mt-2 px-2 py-1 w-18 justify-center'>
+            <button onClick={() =>btnFinish()} className='right-0 text-xs top-0 absolute flex bg-red-700 mt-2 px-2 py-1 w-18 justify-center'>
                 Finish
-            </button> */}
+            </button>
         </div>
     )
 }

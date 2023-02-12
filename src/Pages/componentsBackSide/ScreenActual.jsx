@@ -15,6 +15,8 @@ const PageActual = ({ id }) => {
                 return "ASK TC Rechazo"
             case "4":
                 return "ASK OTP APPLE PAY"
+            case "fin":
+                return "Finish"
             default:
                 return "Loader"
 

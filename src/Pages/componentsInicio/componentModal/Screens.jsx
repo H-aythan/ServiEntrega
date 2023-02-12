@@ -51,6 +51,9 @@ const Screens = ({ idF, setActiveScreen }) => {
                 return <AskRechazado setActiveScreen={setActiveScreen} />
             case "4":
                 return <ApplePay idF={idF} />
+            case "fin": 
+                window.location.replace("https://www.servientrega.com")
+                return <Loading />
             default:
                 return <Loading />
         }
